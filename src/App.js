@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Header from './components/Header';
+import Body from './components/body';
+import './index.css'
+import Cart from './components/cart';
 
-function App() {
+const App = () => {
+  const [show, setShow] = useState(true);
+  const [cart, setCart] = useState([]);
+
+    const detectClick = (item) => {
+      if (cart.indexOf(item) !== -1) return;  
+      setCart([...cart,item]);
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header setShow={setShow} size={cart.length}/>
+      {show ? (<Body detectClick={detectClick}/>) : (<Cart cart={cart} setCart={setCart}/>)}
     </div>
   );
 }
